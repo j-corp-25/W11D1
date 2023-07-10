@@ -56,7 +56,7 @@ function Form () {
 
     const validate = () => {
         let errors = [];
-        if (!isValidPhoneNumber(user.phoneNumber)) {
+        if (user.phoneNumber.length > 0 && !isValidPhoneNumber(user.phoneNumber)) {
             errors.push("Invalid phone number");
         }
         return errors;
