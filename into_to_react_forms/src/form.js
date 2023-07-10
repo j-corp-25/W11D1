@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import  PhoneInput, {isValidPhoneNumber} from 'react-phone-number-input';
+
 
 function Form () {
     const [user, setUser] = useState({
@@ -11,6 +13,8 @@ function Form () {
         notifications: ""
     });
 
+    const [errors,setErrors] = useState([])
+
     const handleChange = (field) => {
         return (e) => {
             // const newObj = Object.assign({}, user, {[field]: e.target.value});
@@ -22,20 +26,54 @@ function Form () {
 
     const handleSubmit = (e) => {
             e.preventDefault();
-            debugger;
+            // debugger;
             console.log(user);
+
+            let errors = validate();
+
+            setErrors(errors);
+
+
+            if (errors.length === 0) {
+                setUser({ name: "",
+                email: "",
+                phoneNumber: "",
+                phoneType: "",
+                staff: "",
+                bio: "",
+                notifications: ""})
+            };
+    }
+
+    const showErrors = () => {
+        if (!errors.length) return null;
+        return (
+            <ul>
+                <li>{errors[0]}</li>
+            </ul>
+        )
+    }
+
+    const validate = () => {
+        let errors = [];
+        if (!isValidPhoneNumber(user.phoneNumber)) {
+            errors.push("Invalid phone number");
+        }
+        return errors;
+
     }
 
 
     return(
         <>
+        {showErrors()}
         <h1> Sign Up!</h1>
         <form onSubmit={handleSubmit}>
-            <input  type="text" placeholder='Name' value={user.name} onChange={handleChange("name")}></input>
+            <input  type="text" placeholder='Name' value={user.name} onChange={handleChange("name")} required></input>
             <br />
-            <input  type="email" placeholder='Email' value={user.email} onChange={handleChange("email")}></input>
+            <input  type="email" placeholder='Email' value={user.email} onChange={handleChange("email")} required></input>
             <br />
-            <input  type="text" placeholder='Phone number' value={user.phoneNumber} onChange={handleChange("phoneNumber")}></input>
+            <input  type="text" placeholder='+1 111-111-1111' value={user.phoneNumber} onChange={handleChange("phoneNumber")}></input>
             <br />
             <label> Phone Type:
                 <select name="Phonetypes" id="types" value={user.phoneType} onChange={handleChange("phoneType")}>
@@ -52,7 +90,7 @@ function Form () {
             <input type="radio" name="staff" value="Student" checked={user.staff === "Student"} onChange={handleChange("staff")}></input>
             </label>
             <br />
-            <textarea rows="5" cols="20" placeholder="Bio" value={user.bio} onChange={handleChange("bio")}></textarea>
+            <textarea rows="5" cols="20" placeholder="Bio" value={user.bio} onChange={handleChange("bio")} maxLength="280"></textarea>
             <br />
             <label> Sign up for email notifications:
             <input type="checkbox" name={user.notifications} onChange={handleChange("notifications")}></input>
