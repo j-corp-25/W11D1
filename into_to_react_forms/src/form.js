@@ -5,7 +5,7 @@ function Form () {
         name: "",
         email: "",
         phoneNumber: "",
-        phoneType: "home",
+        phoneType: "",
         staff: "",
         bio: "",
         notifications: ""
@@ -13,23 +13,27 @@ function Form () {
 
     const handleChange = (field) => {
         return (e) => {
-            const newObj = Object.assign({},user[field])
-            newObj[field] = e.target.value
-            setUser(newObj)
+            // const newObj = Object.assign({}, user, {[field]: e.target.value});
+            const newObj = Object.assign({}, user);
+            newObj[field] = e.target.value;
+            setUser(newObj);
       };
     };
 
-
-
+    const handleSubmit = (e) => {
+            e.preventDefault();
+            debugger;
+            console.log(user);
+    }
 
 
     return(
         <>
         <h1> Sign Up!</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
             <input  type="text" placeholder='Name' value={user.name} onChange={handleChange("name")}></input>
             <br />
-            <input  type="email" placeholder='Email'value={user.email} onChange={handleChange("email")}></input>
+            <input  type="email" placeholder='Email' value={user.email} onChange={handleChange("email")}></input>
             <br />
             <input  type="text" placeholder='Phone number' value={user.phoneNumber} onChange={handleChange("phoneNumber")}></input>
             <br />
@@ -54,7 +58,7 @@ function Form () {
             <input type="checkbox" name={user.notifications} onChange={handleChange("notifications")}></input>
             </label>
             <br />
-            <input type="submit" ></input>
+            <button>Submit</button>
         </form>
     </>
     )
