@@ -1,44 +1,50 @@
-
-
-import React from 'react'
+import { useState } from 'react';
 
 function Form () {
+    const [user, setUser] = useState({
+        name: "",
+        email: "",
+        phoneNumber: "",
+        phoneType: "home",
+        // staff: "Student",
+        bio: "",
+        notifications: "checked"
+    });
+
+
+
     return(
         <>
         <h1> Sign Up!</h1>
         <form>
-            {/* <label for="fname">Name</label> */}
-            <input  type="text" placeholder='Name'></input>
+            <input  type="text" placeholder='Name' value={user.name}></input>
             <br />
-
-
-            <input  type="email" placeholder='Email'></input>
+            <input  type="email" placeholder='Email'value={user.email}></input>
             <br />
-            <input  type="text" placeholder='Phone number'></input>
+            <input  type="text" placeholder='Phone number' value={user.phoneNumber}></input>
             <br />
-
             <label> Phone Type:
-                <select name="Phonetypes" id="types">
+                <select name="Phonetypes" id="types" value={user.phoneType}>
                     <option value="home"> Home </option>
                     <option value="work"> Work </option>
-                    <option value="mobile"> mobile</option>
+                    <option value="mobile"> Mobile</option>
                 </select>
             </label>
             <br />
-
-            
-            <input  type="radio" placeholder='Staff'></input>
+            <label> Instructor:
+            <input type="radio" name="staff" value="Instructor"></input>
+            </label>
+            <label> Student:
+            <input type="radio" name="staff" value="Student"></input>
+            </label>
             <br />
-
-            <input  type="textarea" placeholder='Bio'></input>
+            <textarea rows="5" cols="20" placeholder="Bio" value={user.bio}></textarea>
             <br />
-            <input  type="check-box" placeholder='Sign up for email notifications'></input>
+            <label> Sign up for email notifications:
+            <input type="checkbox" name="notifications" value={user.notifications}></input>
+            </label>
             <br />
-
-
             <input type="submit" ></input>
-
-
         </form>
     </>
     )
